@@ -1,0 +1,86 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: userservice-config
+data: # 데이터 부분이 어플리.yml임
+  application.yml: |- # 키밸류 키:application.yml
+    spring:
+      application:
+        name: userService
+    
+      main:
+        allow-bean-definition-overriding: true
+    
+      datasource:
+        url: jdbc:postgresql://a5ad3ddefdd0a4fac9f0534cee7d1fe9-1830018876.ap-northeast-2.elb.amazonaws.com:5432/userService
+        username: postgres
+        password: example
+        driver-class-name: org.postgresql.Driver
+    
+      jpa:
+        hibernate:
+          ddl-auto: update
+        properties:
+          hibernate:
+            format_sql: true
+    
+      data:
+        redis:
+          host: redis-master-cs
+          port: 6379
+          repositories:
+            enabled: false
+    
+      security:
+        oauth2:
+          client:
+            registration:
+              google:
+                client-id: 47125468463-ni021msvfe6om6voljn80ho8k365vibc.apps.googleusercontent.com
+                client-secret: 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
+    
+      mail:
+        host: smtp.gmail.com
+        port: 587
+        username: jindool2034@gmail.com
+        password: zbxy crih vdix ulyc
+        properties:
+          mail:
+            smtp:
+              auth: true
+              timeout: 5000
+              starttls:
+                enable: true
+    
+      kafka:
+        bootstrap-servers: kafka-svc:9093
+        producer:
+          key-serializer: org.apache.kafka.common.serialization.StringSerializer
+          value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        consumer:
+          key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          auto-offset-reset: earliest
+          group-id: team5
+        listener:
+          missing-topics-fatal: false
+    
+    server:
+      port: 8081
+    
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-server-cs:8761/eureka
+        register-with-eureka: true
+        fetch-registry: true
+      instance:
+        lease-renewal-interval-in-seconds: 15
+        lease-expiration-duration-in-seconds: 20
+    
+    jwt:
+      token:
+        raw_secret_key: 855d3e65473056584f0777d84d681c8a2f4ff5689a5120cae93c4af872d9956e
+      access-token-expiration: 30000
+      refresh-token-expiration: 60480000
+      

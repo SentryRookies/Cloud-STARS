@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userservice
+  template:
+    metadata:
+      labels:
+        app: userservice
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: userservice
+        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/userservice
+        command: ["java"]
+        #args: ["-Dspring.profiles.active=dev","-jar","/api-gateway.jar"] #
+        args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.yml","-jar","/userService.jar"]
+        ports:
+          - containerPort: 8081
+            name: http
+
+        volumeMounts:
+          - name: config # 볼륨에서 지정한 이름을 사용
+            mountPath: /classes/application.yml # 컨테이너 내부의 classes폴더 안에 yml로 저장을 하겠다
+            subPath: application.yml # 파일 전체 옮기는게 아니라 yml 파일 하나만 옮기겠다
+
+      volumes:
+        - name: config # 이 볼륨의 이름을 config로 지정 -> 이걸로 볼륨 마운트에서 참고
+          configMap:
+            name: userservice-config # 어플라이한 configmap 중에서 해당 이름 컨피그를 사용하겠다
+            items:
+              - key: "application.yml" # 해당 컨피그맵에서 이 키의 벨류를
+                path: "application.yml" # 이 파일 이름으로 사용하겠다
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userservice-cs
+  labels:
+    app: userservice
+    service: userService
+spec:
+  ports:
+  - port: 8081
+    name: http
+  selector:
+    app: api-gateway
+  type: ClusterIP
