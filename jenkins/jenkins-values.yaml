@@ -1,0 +1,10 @@
+## jenkins-values.yaml
+persistence:
+  enabled: true
+  existingClaim: jenkins-pvc
+  accessMode: ReadWriteMany
+  size: 10Gi
+  storageClass: efs-sc
+controller:
+  adminSecret: false
+  servicePort: 8888  
