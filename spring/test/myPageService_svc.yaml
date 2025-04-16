@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-gateway
+  name: mypageservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api-gateway
+      app: mypageservice
   template:
     metadata:
       labels:
-        app: api-gateway
+        app: mypageservice
     spec:
       terminationGracePeriodSeconds: 0
       containers:
-      - name: api-gateway
-        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/api-gateway
+      - name: mypageservice
+        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/mypageservice
         command: ["java"]
-        # args: ["-Dspring.profiles.active=dev","-jar","/api-gateway.jar"] #
-        args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.yml","-jar","/api-gateway.jar"]
+        # args: ["-Dspring.profiles.active=dev","-jar","/myPageService.jar"] #
+        args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.yml","-jar","/myPageService.jar"]
         ports:
-          - containerPort: 8080
+          - containerPort: 8082
             name: http
         volumeMounts:
         - name: config
@@ -29,7 +29,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: api-gateway-config
+            name: mypageservice-config
             items:
               - key: "application.yml"
                 path: "application.yml"
@@ -38,14 +38,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-gateway-cs
+  name: mypageservice-cs
   labels:
-    app: api-gateway
-    service: api-gateway
+    app: mypageservice
+    service: mypageservice
 spec:
   ports:
-  - port: 8080
+  - port: 8082
+    targetPort: 8082
     name: http
   selector:
-    app: api-gateway
+    app: mypageservice
   type: ClusterIP
