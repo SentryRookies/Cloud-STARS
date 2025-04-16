@@ -73,28 +73,8 @@ spec:
         paths:
           - backend:
               service:
-                name: argocd-server
+                name: jenkins
                 port:
-                  number: 30899
-            path: /
-            pathType: Prefix
-    - host: prometheus.seoultravel.life
-      http:
-        paths:
-          - backend:
-              service:
-                name: prometheus-server
-                port:
-                  number: 980
-            path: /
-            pathType: Prefix
-    - host: alertmanager.seoultravel.life
-      http:
-        paths:
-          - backend:
-              service:
-                name: alertmanager
-                port:
-                  number: 9093
+                  number: 8888
             path: /
             pathType: Prefix
