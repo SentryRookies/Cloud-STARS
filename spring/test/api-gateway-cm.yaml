@@ -1,0 +1,50 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: api-gateway-config
+data:
+  application.yml: |-
+    spring:
+      application:
+        name: api-gateway
+
+      cloud:
+        compatibility-verifier:
+          enabled: false
+
+      data:
+        redis:
+          host: redis-master-cs  # Redis 서버 IP 주소
+          port: 6379          # Redis 서버 포트
+          database: 0
+          repositories:
+            enabled: false     # Redis 리포지토리 사용 여부
+
+      main:
+        allow-bean-definition-overriding: true
+
+    server:
+      port: 8080
+
+    gateway:
+      km: http://13.208.52.153:8070
+      ps: http://15.168.34.88:8010
+      hUser: userservice-cs:8081
+      hMyPage: mypageservice-cs:8082
+
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://eureka-server-cs:8761/eureka
+      instance:
+        lease-renewal-interval-in-seconds: 15
+        lease-expiration-duration-in-seconds: 20
+
+
+    # JWT (??? ????)
+    jwt:
+      token:
+        raw_secret_key: 855d3e65473056584f0777d84d681c8a2f4ff5689a5120cae93c4af872d9956e
+      # ????? ??? ?? ?? -> ?? ??
+      expiration: 12000
+
