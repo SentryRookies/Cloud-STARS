@@ -669,3 +669,75 @@ spec:
     matchLabels:
       type: spark-work-log-pv
 ---
+
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-pv
+  labels:
+    type: prometheus-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efs-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-07cac985d0f82c76d::fsap-0b733cc5806161f31
+---
+# Source: redis-master/templates/efs-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-pvc
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      type: prometheus-pv
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-alert-pv
+  labels:
+    type: prometheus-alert-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efs-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-07cac985d0f82c76d::fsap-0623fc743a1a533f9
+---
+# Source: redis-master/templates/efs-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-alert-pvc
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      type: prometheus-alert-pv
+---
