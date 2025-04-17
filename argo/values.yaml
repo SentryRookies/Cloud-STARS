@@ -5,7 +5,7 @@ repoServer:
   volumes:
     - name: repo-data
       persistentVolumeClaim:
-        claimName: argocd-pvc
+        claimName: argocd-repo-server-pvc
 
 applicationController:
   volumeMounts:
@@ -14,7 +14,7 @@ applicationController:
   volumes:
     - name: controller-data
       persistentVolumeClaim:
-        claimName: argocd-pvc
+        claimName: argocd-application-controller-pvc
 
 server:
   volumeMounts:
@@ -23,4 +23,4 @@ server:
   volumes:
     - name: server-data
       persistentVolumeClaim:
-        claimName: argocd-pvc
+        claimName: argocd-server-pvc
