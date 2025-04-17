@@ -3,7 +3,7 @@ name:  ingress
 on:
   push:
     branches:
-      - main
+      - main2
 jobs:
   setup-alb-controller:
     runs-on: ubuntu-latest
@@ -32,6 +32,16 @@ jobs:
           aws eks update-kubeconfig \
             --region ap-northeast-2 \
             --name one-cluster 
+      
+      - name: Get VPC ID from EKS Cluster
+        id: get-vpc
+        run: |
+          VPC_ID=$(aws eks describe-cluster \
+            --name one-cluster \
+            --region ap-northeast-2 \
+            --query "cluster.resourcesVpcConfig.vpcId" \
+            --output text)
+          echo "VPC_ID=$VPC_ID" >> $GITHUB_ENV
 
       - name: Associate OIDC provider
         run: |
@@ -59,4 +69,5 @@ jobs:
             -n kube-system \
             --set clusterName=one-cluster \
             --set serviceAccount.create=false \
-            --set serviceAccount.name=aws-load-balancer-controller
+            --set serviceAccount.name=aws-load-balancer-controller \ 
+            --set vpcId=${{ env.VPC_ID }}
