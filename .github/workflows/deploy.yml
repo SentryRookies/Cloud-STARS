@@ -22,6 +22,16 @@ jobs:
         run: |
           curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
           sudo mv /tmp/eksctl /usr/local/bin
+      
+      - name: Install helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  
+      - name: Set up kubeconfig
+        run: |
+          aws eks update-kubeconfig \
+            --region ap-northeast-2 \
+            --name one-cluster 
 
       - name: Associate OIDC provider
         run: |
