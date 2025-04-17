@@ -741,3 +741,39 @@ spec:
     matchLabels:
       type: prometheus-alert-pv
 ---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: grafana-pv
+  labels:
+    type: grafana-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: efs-sc
+  csi:
+    driver: efs.csi.aws.com
+    volumeHandle: fs-07cac985d0f82c76d::fsap-030d49fcfe3744dff
+---
+# Source: redis-master/templates/efs-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+  namespace: monitoring
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      type: grafana-pv
+---
