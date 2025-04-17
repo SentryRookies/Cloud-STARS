@@ -34,3 +34,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### terraform ###
+# terraform/.terraform
+terraform/*
+!terraform/*.tf
