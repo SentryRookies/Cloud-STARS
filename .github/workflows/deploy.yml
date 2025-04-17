@@ -3,7 +3,7 @@ name:  EKS default setting
 on:
   push:
     branches:
-      - main2
+      - main
 jobs:
   setup-alb-controller:
     runs-on: ubuntu-latest
@@ -86,3 +86,30 @@ jobs:
           kubectl label nodes ${NODES[2]} dspESType=data2 --overwrite
           kubectl label nodes ${NODES[2]} dspSparkType=worker --overwrite
           kubectl label nodes ${NODES[2]} dspDBType=postgre --overwrite
+
+      - name: Install ArgoCD via Helm
+        run: |
+          helm repo add argo https://argoproj.github.io/argo-helm
+          helm repo update
+          kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+          helm upgrade --install argocd argo/argo-cd \
+            -n argocd \
+            -f ${{ github.workspace }}/argocd-values.yaml
+
+      - name: Wait for ArgoCD server to be ready
+        run: |
+          echo "⏳ Waiting for ArgoCD server to be ready..."
+          kubectl rollout status deployment/argocd-server -n argocd --timeout=120s
+
+      - name: Add Git Repo to ArgoCD
+        run: |
+          ARGOCD_POD=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o jsonpath="{.items[0].metadata.name}")
+          
+          # Wait until the CLI is ready inside the container
+          kubectl exec -n argocd $ARGOCD_POD -- argocd login localhost:443 --insecure --username admin --password $(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+          
+          kubectl exec -n argocd $ARGOCD_POD -- \
+            argocd repo add https://github.com/heozzi/Cloud-STARS \
+              --username heozzi \
+              --password ${{ secrets.GIT_PASSWORD }} \
+              --upsert

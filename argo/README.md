@@ -20,7 +20,6 @@ kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 # 아르고 패스워드 변경
 ```
-kubectl exec -it -n default deployment/argocd-server -- /bin/bash
 kubectl exec -it -n argocd deployment/argocd-server -- /bin/bash
 
 argocd login localhost:8080 --username admin --password "디코딩패스워드" --insecure
@@ -41,5 +40,5 @@ kubectl port-forward svc/argocd-server -n argocd 8889:443
 kubectl apply -f efs-application.yaml -n argocd
 kubectl apply -f spring-application.yaml -n argocd
 kubectl apply -f jenkins-application.yaml -n argocd
-kubectl apply -f argo-application.yaml -n argocd
+kubectl apply -f ingress-application.yaml -n argocd
 ```

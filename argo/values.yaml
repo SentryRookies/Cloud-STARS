@@ -1,0 +1,26 @@
+repoServer:
+  volumeMounts:
+    - mountPath: /tmp
+      name: repo-data
+  volumes:
+    - name: repo-data
+      persistentVolumeClaim:
+        claimName: argocd-pvc
+
+applicationController:
+  volumeMounts:
+    - mountPath: /shared-data
+      name: controller-data
+  volumes:
+    - name: controller-data
+      persistentVolumeClaim:
+        claimName: argocd-pvc
+
+server:
+  volumeMounts:
+    - mountPath: /home/argocd
+      name: server-data
+  volumes:
+    - name: server-data
+      persistentVolumeClaim:
+        claimName: argocd-pvc
