@@ -1,4 +1,4 @@
-name:  ingress
+name:  EKS default setting
 
 on:
   push:
@@ -71,3 +71,18 @@ jobs:
             --set serviceAccount.create=false \
             --set serviceAccount.name=aws-load-balancer-controller \ 
             --set vpcId=${{ env.VPC_ID }}
+
+
+      - name: Label Nodes
+        run: |
+          NODES=($(kubectl get nodes -o jsonpath='{.items[*].metadata.name}'))
+      
+          kubectl label nodes ${NODES[0]} dspESType=master --overwrite
+          kubectl label nodes ${NODES[0]} dspSparkType=master --overwrite
+      
+          kubectl label nodes ${NODES[1]} dspESType=data1 --overwrite
+          kubectl label nodes ${NODES[1]} dspSparkType=worker --overwrite
+      
+          kubectl label nodes ${NODES[2]} dspESType=data2 --overwrite
+          kubectl label nodes ${NODES[2]} dspSparkType=worker --overwrite
+          kubectl label nodes ${NODES[2]} dspDBType=postgre --overwrite
