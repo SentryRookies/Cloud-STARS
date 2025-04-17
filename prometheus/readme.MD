@@ -44,3 +44,9 @@ helm repo update
     - 접속
       - http://localhost:9093
   
+# 프로메테우스 쿼리
+- 각 노드들 cpu 사용량 백분율
+  - 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)
+
+- 각 노드들 메모리 사용량 백분율
+  - (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100
