@@ -103,7 +103,6 @@ jobs:
         run: |
           mkdir -p argocd-settings
   
-          cat <<EOF > argocd-settings/admin-secret.yaml
           printf "%s\n" "${{ secrets.ARGO_SECRET }}" > argocd-settings/admin-secret.yaml
           printf "%s\n" "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
           printf "%s\n" "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
