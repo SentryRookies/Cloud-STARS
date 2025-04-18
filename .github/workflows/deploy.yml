@@ -115,54 +115,10 @@ jobs:
       - name: Set up Argo CD Settings from Secrets
         run: |
           mkdir -p argocd-settings
-          printf "%s\n" "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
+          echo "${{ secrets.ARGO_SECRET }}" > argocd-settings/admin-secret.yaml
+          echo "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
+          echo "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
 
-      - name: Create admin-secret.yaml with password
-        env:
-          ARGO_ACC_PASS: ${{ secrets.ARGO_ACC_PASS }}
-          ARGO_ACC_DATE: ${{ secrets.ARGO_ACC_DATE }}
-        run: |
-          mkdir -p argocd-settings
-          cat <<EOF > argocd-settings/admin-secret.yaml
-          apiVersion: v1
-          kind: Secret
-          metadata:
-            name: argocd-secret
-            namespace: argocd
-          labels:
-            app.kubernetes.io/name: argocd-secret
-            app.kubernetes.io/part-of: argocd
-          type: Opaque
-          data:
-            admin.password: ${ARGO_ACC_PASS}
-            admin.passwordMtime: ${ARGO_ACC_DATE}
-          EOF
-      - name: Show generated YAMLs
-        run: |
-          echo "--- admin-secret.yaml ---"
-          cat argocd-settings/admin-secret.yaml
-          echo "--- git-repo.yaml ---"
-          cat argocd-settings/git-repo.yaml
-          echo "--- application.yaml ---"
-          cat argocd-settings/application.yaml
-      - name: Create git-repo.yaml
-        env:
-          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-        run: |
-          cat <<EOF > argocd-settings/git-repo.yaml
-          apiVersion: v1
-          kind: Secret
-          metadata:
-            name: my-git-repo
-            namespace: argocd
-            labels:
-              argocd.argoproj.io/secret-type: repository
-          type: Opaque
-          stringData:
-            url: https://github.com/heozzi/Cloud-STARS
-            username: heozzi
-            password: ${GIT_PASSWORD}
-    
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
           kubectl apply -f ./argocd-settings/
