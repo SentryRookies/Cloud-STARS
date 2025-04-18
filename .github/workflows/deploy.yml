@@ -127,3 +127,8 @@ jobs:
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
           kubectl apply -f ./argocd-settings/
+
+
+
+
+
