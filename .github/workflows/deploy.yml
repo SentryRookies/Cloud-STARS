@@ -80,10 +80,6 @@ jobs:
   setup-argocd:
     runs-on: ubuntu-latest
     needs: setup-infra
-    env:
-      ARGO_ACC_PASS: ${{ secrets.ARGO_ACC_PASS }}
-      ARGO_ACC_DATE: ${{ secrets.ARGO_ACC_DATE }}
-      GIT_PASSWORD :  ${{ secrets.GIT_PASSWORD }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -115,14 +111,26 @@ jobs:
           helm upgrade --install argocd argo/argo-cd \
             -n argocd \
             -f argocd-values.yaml
-
+      
       - name: Set up Argo CD Settings from Secrets
+        env:
+          ARGO_SECRET: ${{ secrets.ARGO_SECRET }}
+          ARGO_GIT_REPO: ${{ secrets.ARGO_GIT_REPO }}
+          ARGO_APPLICATION: ${{ secrets.ARGO_APPLICATION }}
         run: |
           mkdir -p argocd-settings
-
-          printf "%s\n" "${{ secrets.ARGO_SECRET }}" > argocd-settings/admin-secret.yaml
-          printf "%s\n" "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
-          printf "%s\n" "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
+      
+          cat <<'EOF' > argocd-settings/admin-secret.yaml
+          $ARGO_SECRET
+          EOF
+      
+          cat <<'EOF' > argocd-settings/git-repo.yaml
+          $ARGO_GIT_REPO
+          EOF
+      
+          cat <<'EOF' > argocd-settings/application.yaml
+          $ARGO_APPLICATION
+          EOF
 
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
