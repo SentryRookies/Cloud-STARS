@@ -102,10 +102,18 @@ jobs:
       - name: Set up Argo CD Settings from Secrets
         run: |
           mkdir -p argocd-settings
-      
-          echo "${{ secrets.ARGO_SECRET }}" > argocd-settings/admin-secret.yaml
-          echo "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
-          echo "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
+
+            cat <<EOF > argocd-settings/admin-secret.yaml
+            ${{ secrets.ARGO_SECRET }}
+            EOF
+
+            cat <<EOF > argocd-settings/git-repo.yaml
+            ${{ secrets.ARGO_GIT_REPO }}
+            EOF
+
+            cat <<EOF > argocd-settings/application.yaml
+            ${{ secrets.ARGO_APPLICATION }}
+            EOF
     
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
