@@ -121,4 +121,5 @@ jobs:
 
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
+          kubectl delete secret argocd-secret -n argocd --ignore-not-found
           kubectl apply -f ./argocd-settings/
