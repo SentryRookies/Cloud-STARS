@@ -103,23 +103,21 @@ jobs:
       - name: Create argocd-values.yaml from secret
         run: echo "${{ secrets.ARGO_VALUES }}" > argocd-values.yaml
 
-      # - name: Install Argo CD with Helm
-      #   run: |
-      #     helm repo add argo https://argoproj.github.io/argo-helm
-      #     helm repo update
-      #     kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
-      #     helm upgrade --install argocd argo/argo-cd \
-      #       -n argocd \
-      #       -f argocd-values.yaml
+      - name: Install Argo CD with Helm
+        run: |
+          helm repo add argo https://argoproj.github.io/argo-helm
+          helm repo update
+          kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+          helm upgrade --install argocd argo/argo-cd \
+            -n argocd \
+            -f argocd-values.yaml
 
       - name: Set up Argo CD Settings from Secrets
         run: |
           mkdir -p argocd-settings
-          echo "${{ secrets.ARGO_SECRET }}" > argocd-settings/admin-secret.yaml
           echo "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
           echo "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
 
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
-          kubectl delete secret argocd-secret -n argocd --ignore-not-found
           kubectl apply -f ./argocd-settings/
