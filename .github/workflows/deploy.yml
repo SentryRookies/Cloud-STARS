@@ -131,6 +131,14 @@ jobs:
           cat <<'EOF' > argocd-settings/application.yaml
           $ARGO_APPLICATION
           EOF
+      - name: Show generated YAMLs
+        run: |
+            echo "--- admin-secret.yaml ---"
+            cat argocd-settings/admin-secret.yaml
+            echo "--- git-repo.yaml ---"
+            cat argocd-settings/git-repo.yaml
+            echo "--- application.yaml ---"
+            cat argocd-settings/application.yaml
 
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
