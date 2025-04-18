@@ -1,3 +1,3 @@
 configs:
   secret:
-    createAdminSecret: false
+    argocdServerAdminPassword: "$2a$10$4sgrJkE4V4HbCzGjIWeOVuIG8i0hM0M7gDuY3kVGH9Di4ZUd3Xxym"
