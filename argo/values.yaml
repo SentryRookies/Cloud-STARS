@@ -1,9 +1,9 @@
 repoServer:
   volumeMounts:
-    - mountPath: /tmp
-      name: tmp-dir  # MUST match existing name in chart
+    - mountPath: /mnt/tmp  # 변경된 부분
+      name: repo-data
   volumes:
-    - name: tmp-dir
+    - name: repo-data
       persistentVolumeClaim:
         claimName: argocd-repo-server-pvc
 
@@ -18,9 +18,9 @@ applicationController:
 
 server:
   volumeMounts:
-    - mountPath: /home/argocd
-      name: static-files   # ← ArgoCD 기본 이름과 동일해야 함!
+    - mountPath: /mnt/argocd-home  # 변경된 경로
+      name: server-data
   volumes:
-    - name: static-files
+    - name: server-data
       persistentVolumeClaim:
         claimName: argocd-server-pvc

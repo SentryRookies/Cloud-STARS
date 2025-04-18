@@ -3,7 +3,7 @@ name:  EKS default setting
 on:
   push:
     branches:
-      - main
+      - main2
 jobs:
   setup-alb-controller:
     runs-on: ubuntu-latest
