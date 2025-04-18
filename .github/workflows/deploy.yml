@@ -137,7 +137,14 @@ jobs:
             admin.password: ${ARGO_ACC_PASS}
             admin.passwordMtime: ${ARGO_ACC_DATE}
           EOF
-
+      - name: Show generated YAMLs
+        run: |
+          echo "--- admin-secret.yaml ---"
+          cat argocd-settings/admin-secret.yaml
+          echo "--- git-repo.yaml ---"
+          cat argocd-settings/git-repo.yaml
+          echo "--- application.yaml ---"
+          cat argocd-settings/application.yaml
       - name: Create git-repo.yaml
         env:
           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
