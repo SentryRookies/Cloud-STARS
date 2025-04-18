@@ -103,43 +103,59 @@ jobs:
       - name: Create argocd-values.yaml from secret
         run: echo "${{ secrets.ARGO_VALUES }}" > argocd-values.yaml
 
-      - name: Install Argo CD with Helm
-        run: |
-          helm repo add argo https://argoproj.github.io/argo-helm
-          helm repo update
-          kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
-          helm upgrade --install argocd argo/argo-cd \
-            -n argocd \
-            -f argocd-values.yaml
-      
+      # - name: Install Argo CD with Helm
+      #   run: |
+      #     helm repo add argo https://argoproj.github.io/argo-helm
+      #     helm repo update
+      #     kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+      #     helm upgrade --install argocd argo/argo-cd \
+      #       -n argocd \
+      #       -f argocd-values.yaml
+
       - name: Set up Argo CD Settings from Secrets
-        env:
-          ARGO_SECRET: ${{ secrets.ARGO_SECRET }}
-          ARGO_GIT_REPO: ${{ secrets.ARGO_GIT_REPO }}
-          ARGO_APPLICATION: ${{ secrets.ARGO_APPLICATION }}
         run: |
           mkdir -p argocd-settings
-      
-          cat <<'EOF' > argocd-settings/admin-secret.yaml
-          $ARGO_SECRET
-          EOF
-      
-          cat <<'EOF' > argocd-settings/git-repo.yaml
-          $ARGO_GIT_REPO
-          EOF
-      
-          cat <<'EOF' > argocd-settings/application.yaml
-          $ARGO_APPLICATION
-          EOF
-      - name: Show generated YAMLs
-        run: |
-            echo "--- admin-secret.yaml ---"
-            cat argocd-settings/admin-secret.yaml
-            echo "--- git-repo.yaml ---"
-            cat argocd-settings/git-repo.yaml
-            echo "--- application.yaml ---"
-            cat argocd-settings/application.yaml
+          printf "%s\n" "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
 
+      - name: Create admin-secret.yaml with password
+        run: |
+          cat <<EOF > argocd-settings/admin-secret.yaml
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: argocd-secret
+            namespace: argocd
+          labels:
+            app.kubernetes.io/name: argocd-secret
+            app.kubernetes.io/part-of: argocd
+          type: Opaque
+          data:
+            admin.password: $ARGO_ACC_PASS
+            admin.passwordMtime: $ARGO_ACC_DATE
+          EOF
+            env:
+              ARGO_ACC_PASS: ${{ secrets.ARGO_ACC_PASS }}
+              ARGO_ACC_DATE: ${{ secrets.ARGO_ACC_DATE }}
+
+      - name: Create git-repo.yaml
+        run: |
+          cat <<EOF > argocd-settings/git-repo.yaml
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: my-git-repo
+            namespace: argocd
+            labels:
+              argocd.argoproj.io/secret-type: repository
+          type: Opaque
+          stringData:
+            url: https://github.com/heozzi/Cloud-STARS
+            username: heozzi
+            password: $GIT_PASSWORD
+          EOF
+            env:
+              GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+    
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
           kubectl apply -f ./argocd-settings/
