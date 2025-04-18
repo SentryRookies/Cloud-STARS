@@ -121,16 +121,16 @@ jobs:
           mkdir -p argocd-settings
 
             cat <<EOF > argocd-settings/admin-secret.yaml
-            $ARGO_SECRET
-            EOF
+      $ARGO_SECRET
+      EOF
             
             cat <<EOF > argocd-settings/git-repo.yaml
-            $ARGO_GIT_REPO
-            EOF
+      $ARGO_GIT_REPO
+      EOF
             
             cat <<EOF > argocd-settings/application.yaml
-            $ARGO_APPLICATION
-            EOF
+      $ARGO_APPLICATION
+      EOF
       - name: 🔍 Show generated YAMLs
         run: |
           cat argocd-settings/admin-secret.yaml
