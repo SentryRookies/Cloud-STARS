@@ -3,7 +3,7 @@ name:  EKS default setting
 on:
   push:
     branches:
-      - main2
+      - main
 jobs:
   setup-alb-controller:
     runs-on: ubuntu-latest
@@ -99,3 +99,14 @@ jobs:
           helm upgrade --install argocd argo/argo-cd \
             -n argocd \
             -f argocd-values.yaml
+      - name: Set up Argo CD Settings from Secrets
+        run: |
+          mkdir -p argocd-settings
+      
+          echo "${{ secrets.ARGO_SECRET }}" | base64 -d > argocd-settings/admin-secret.yaml
+          echo "${{ secrets.ARGO_GIT_REPO }}" | base64 -d > argocd-settings/git-repo.yaml
+          echo "${{ secrets.ARGO_APPLICATION }}" | base64 -d > argocd-settings/application.yaml
+    
+      - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
+        run: |
+          kubectl apply -f ./argocd-settings/

@@ -1,26 +1,3 @@
-repoServer:
-  volumeMounts:
-    - mountPath: /mnt/tmp  # 변경된 부분
-      name: repo-data
-  volumes:
-    - name: repo-data
-      persistentVolumeClaim:
-        claimName: argocd-repo-server-pvc
-
-applicationController:
-  volumeMounts:
-    - mountPath: /shared-data
-      name: controller-data
-  volumes:
-    - name: controller-data
-      persistentVolumeClaim:
-        claimName: argocd-application-controller-pvc
-
-server:
-  volumeMounts:
-    - mountPath: /mnt/argocd-home  # 변경된 경로
-      name: server-data
-  volumes:
-    - name: server-data
-      persistentVolumeClaim:
-        claimName: argocd-server-pvc
+configs:
+  secret:
+    createAdminSecret: false
