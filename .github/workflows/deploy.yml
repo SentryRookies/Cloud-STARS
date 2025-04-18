@@ -118,7 +118,11 @@ jobs:
           printf "%s\n" "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
 
       - name: Create admin-secret.yaml with password
+        env:
+          ARGO_ACC_PASS: ${{ secrets.ARGO_ACC_PASS }}
+          ARGO_ACC_DATE: ${{ secrets.ARGO_ACC_DATE }}
         run: |
+          mkdir -p argocd-settings
           cat <<EOF > argocd-settings/admin-secret.yaml
           apiVersion: v1
           kind: Secret
@@ -130,14 +134,13 @@ jobs:
             app.kubernetes.io/part-of: argocd
           type: Opaque
           data:
-            admin.password: $ARGO_ACC_PASS
-            admin.passwordMtime: $ARGO_ACC_DATE
+            admin.password: ${ARGO_ACC_PASS}
+            admin.passwordMtime: ${ARGO_ACC_DATE}
           EOF
-            env:
-              ARGO_ACC_PASS: ${{ secrets.ARGO_ACC_PASS }}
-              ARGO_ACC_DATE: ${{ secrets.ARGO_ACC_DATE }}
 
       - name: Create git-repo.yaml
+        env:
+          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
         run: |
           cat <<EOF > argocd-settings/git-repo.yaml
           apiVersion: v1
@@ -151,10 +154,7 @@ jobs:
           stringData:
             url: https://github.com/heozzi/Cloud-STARS
             username: heozzi
-            password: $GIT_PASSWORD
-          EOF
-            env:
-              GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
+            password: ${GIT_PASSWORD}
     
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
