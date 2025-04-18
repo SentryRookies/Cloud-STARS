@@ -104,8 +104,6 @@ jobs:
           mkdir -p argocd-settings
   
           printf "%s\n" "${{ secrets.ARGO_SECRET }}" > argocd-settings/admin-secret.yaml
-          printf "%s\n" "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
-          printf "%s\n" "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
 
 
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
