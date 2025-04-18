@@ -79,7 +79,7 @@ jobs:
 
   setup-argocd:
     runs-on: ubuntu-latest
-    #needs: setup-infra
+    needs: setup-infra
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
