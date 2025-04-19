@@ -8,8 +8,8 @@ jobs:
   setup-infra:
     runs-on: ubuntu-latest
     steps:   
-      - name: Create argocd-values.yaml
-        run: echo "${{ secrets.ARGO_VALUES }}" | base64 -d > argocd-values.yaml
+      - name: Create argocd-values.yaml from secret
+        run: echo "${{ secrets.ARGO_VALUES }}" > argocd-values.yaml
 
       - name: 🔍 Print argocd-values.yaml
         run: |
