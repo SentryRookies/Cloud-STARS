@@ -1,0 +1,17 @@
+name: File Check
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  setup-infra:
+    runs-on: ubuntu-latest
+    steps:   
+      - name: Create argocd-values.yaml
+        run: echo "${{ secrets.ARGO_VALUES }}" | base64 -d > argocd-values.yaml
+
+      - name: 🔍 Print argocd-values.yaml
+        run: |
+          echo "===== argocd-values.yaml 내용 ====="
+          cat argocd-values.yaml
