@@ -1,8 +1,9 @@
+
 name: EKS Full Setup (ALB + Argo CD)
 
 on:
   push:
-    branches: [main]
+    branches: [main2]
 
 jobs:
   setup-infra:
@@ -93,13 +94,8 @@ jobs:
       - name: Set up kubeconfig
         run: aws eks update-kubeconfig --region ap-northeast-2 --name one-cluster
 
-      - name: Create argocd-values.yaml
-        run: echo "${{ secrets.ARGO_VALUES }}" | base64 -d > argocd-values.yaml
-
-      - name: 🔍 Print argocd-values.yaml
-        run: |
-          echo "===== argocd-values.yaml 내용 ====="
-          cat argocd-values.yaml
+      - name: Create argocd-values.yaml from secret
+        run: echo "${{ secrets.ARGO_VALUES }}" > argocd-values.yaml
 
       - name: Install Argo CD with Helm
         run: |
@@ -113,7 +109,7 @@ jobs:
         run: |
           mkdir -p argocd-settings
           echo "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
-
+          
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
           kubectl apply -f ./argocd-settings/
