@@ -1,3 +1,5 @@
 configs:
   secret:
-    argocdServerAdminPassword: "$2a$10$4sgrJkE4V4HbCzGjIWeOVuIG8i0hM0M7gDuY3kVGH9Di4ZUd3Xxym"
+    # admin / admin1234
+    argocdServerAdminPassword: $2b$10$QkGQL1L00nBebiuIXlCYFOOBUVkTt/Z96.mHLWGAUDvNXsM1AxNbS
+    argocdServerAdminPasswordMtime: 2020-07-01T00:00:00Z

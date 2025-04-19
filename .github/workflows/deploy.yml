@@ -1,3 +1,4 @@
+
 name: EKS Full Setup (ALB + Argo CD)
 
 on:
@@ -24,7 +25,6 @@ jobs:
         run: |
           curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
           sudo mv /tmp/eksctl /usr/local/bin
-
       - name: Install helm
         run: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
@@ -40,14 +40,12 @@ jobs:
             --query "cluster.resourcesVpcConfig.vpcId" \
             --output text)
           echo "vpc_id=$VPC_ID" >> $GITHUB_OUTPUT
-
       - name: Associate OIDC provider
         run: |
           eksctl utils associate-iam-oidc-provider \
             --region ap-northeast-2 \
             --cluster one-cluster \
             --approve
-
       - name: Create IAM service account
         run: |
           eksctl create iamserviceaccount \
@@ -58,7 +56,6 @@ jobs:
             --override-existing-serviceaccounts \
             --region ap-northeast-2 \
             --approve
-
       - name: Install ALB Controller
         run: |
           helm repo add eks https://aws.github.io/eks-charts
@@ -69,14 +66,12 @@ jobs:
             --set serviceAccount.create=false \
             --set serviceAccount.name=aws-load-balancer-controller \
             --set vpcId=${{ steps.get-vpc.outputs.vpc_id }}
-
       - name: Label Nodes
         run: |
           NODES=($(kubectl get nodes -o jsonpath='{.items[*].metadata.name}'))
           kubectl label nodes ${NODES[0]} dspESType=master dspSparkType=master --overwrite
           kubectl label nodes ${NODES[1]} dspESType=data1 dspSparkType=worker --overwrite
           kubectl label nodes ${NODES[2]} dspESType=data2 dspSparkType=worker dspDBType=postgre --overwrite
-
   setup-argocd:
     runs-on: ubuntu-latest
     needs: setup-infra
@@ -96,7 +91,6 @@ jobs:
           curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
           sudo mv /tmp/eksctl /usr/local/bin
           curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-
       - name: Set up kubeconfig
         run: aws eks update-kubeconfig --region ap-northeast-2 --name one-cluster
 
@@ -111,13 +105,11 @@ jobs:
           helm upgrade --install argocd argo/argo-cd \
             -n argocd \
             -f argocd-values.yaml
-
       - name: Set up Argo CD Settings from Secrets
         run: |
           mkdir -p argocd-settings
           echo "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
-          echo "${{ secrets.ARGO_APPLICATION }}" > argocd-settings/application.yaml
-
+          
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
           kubectl apply -f ./argocd-settings/
