@@ -113,3 +113,75 @@ jobs:
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
           kubectl apply -f ./argocd-settings/
+  setup-grafana:
+    runs-on: ubuntu-latest
+    needs: setup-argocd
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Install grafana CD with Helm
+        run: |
+          helm repo add grafana https://grafana.github.io/helm-charts
+          helm repo update
+          helm upgrade --install grafana grafana/grafana \
+            --namespace monitoring \
+            --create-namespace \
+            --values ./grafana/values.yaml
+  setup-prometheus:
+    runs-on: ubuntu-latest
+    needs: setup-grafana
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Install prometheus with Helm
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo update
+          helm upgrade --install prometheus prometheus-community/prometheus \
+            --namespace monitoring \
+            --create-namespace \
+            -f ./prometheus/values.yaml
+
+      - name: Install prometalertmanagerheus with Helm
+        run: |
+          helm upgrade --install alertmanager prometheus-community/alertmanager \
+            -n monitoring \
+            -f ./prometheus/alert_values.yaml
+  setup-fluentbit :
+    runs-on: ubuntu-latest
+    needs: setup-prometheus
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Install fluentbit with Helm
+        run: |
+          helm repo add fluent https://fluent.github.io/helm-charts
+          helm repo update
+          helm upgrade --install fluent-bit fluent/fluent-bit \
+            --namespace logging \
+            --create-namespace \
+            -f ./fluentbit/values.yaml
