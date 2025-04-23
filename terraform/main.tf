@@ -32,7 +32,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.19.0"
 
-  name = "star-cluster-vpc"
+  name = "one-cluster-vpc"
   cidr = "192.168.0.0/16"
 
   azs             = ["ap-northeast-2a", "ap-northeast-2b", "ap-northeast-2c"]
