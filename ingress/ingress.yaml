@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: "demo1.seoultravel.life"
+    - host: demo1.seoultravel.life
       http:
         paths:
           - path: /
@@ -18,7 +18,7 @@ spec:
                 name: api-gateway-cs
                 port:
                   number: 8080
-    - host: "kafkamanager.seoultravel.life"
+    - host: kafkamanager.seoultravel.life
       http:
         paths:
           - path: /
@@ -68,7 +68,6 @@ spec:
                   number: 8761
             path: /
             pathType: Prefix
-    - host: kafkamanager.seoultravel.life
       http:
         paths:
           - backend:
@@ -76,5 +75,15 @@ spec:
                 name: kafkamanager-cs
                 port:
                   number: 12004
+            path: /
+            pathType: Prefix
+    - host: elasticsearch.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: elasticsearch-cs
+                port:
+                  number: 9200
             path: /
             pathType: Prefix
