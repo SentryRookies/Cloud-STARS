@@ -43,11 +43,11 @@ metadata:
   name: userservice-cs
   labels:
     app: userservice
-    service: userService
+    service: userservice
 spec:
   ports:
   - port: 8081
     name: http
   selector:
-    app: api-gateway
+    app: userservice
   type: ClusterIP
