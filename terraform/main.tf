@@ -73,13 +73,14 @@ module "eks" {
       desired_capacity = 3
       max_capacity     = 3
       min_capacity     = 1
-      instance_types    = ["t3.xlarge"]
+      instance_types    = ["t3.medium"]
 
       subnets = module.vpc.public_subnets
 
       iam_role_additional_policies = {
-        ecr_read = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-        eks_service = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+        ecr_read = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"]
+        eks_service = ["arn:aws:iam::aws:policy/AmazonEKSServicePolicy"]
+        efs_service = ["arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"]
       }
     }
   }

@@ -1,3 +1,4 @@
+
 name: EKS Full Setup (ALB + Argo CD)
 
 on:
@@ -80,6 +81,10 @@ jobs:
   setup-argocd:
     runs-on: ubuntu-latest
     needs: setup-infra
+    env:
+      ARGO_ACC_PASS: ${{ secrets.ARGO_ACC_PASS }}
+      ARGO_ACC_DATE: ${{ secrets.ARGO_ACC_DATE }}
+      GIT_PASSWORD :  ${{ secrets.GIT_PASSWORD }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -101,7 +106,7 @@ jobs:
         run: aws eks update-kubeconfig --region ap-northeast-2 --name one-cluster
 
       - name: Create argocd-values.yaml from secret
-        run: echo "${{ secrets.ARGO_VALUES }}" > argocd-values.yaml
+        run: echo "${{ secrets.ARGO_VALUES }}" | base64 -d > argocd-values.yaml
 
       - name: Install Argo CD with Helm
         run: |
@@ -111,34 +116,11 @@ jobs:
           helm upgrade --install argocd argo/argo-cd \
             -n argocd \
             -f argocd-values.yaml
-
       - name: Set up Argo CD Settings from Secrets
-        env:
-          ARGO_SECRET: ${{ secrets.ARGO_SECRET }}
-          ARGO_GIT_REPO: ${{ secrets.ARGO_GIT_REPO }}
-          ARGO_APPLICATION: ${{ secrets.ARGO_APPLICATION }}
         run: |
           mkdir -p argocd-settings
-
-          cat <<EOF > argocd-settings/admin-secret.yaml
-          $ARGO_SECRET
-          EOF
-            
-          cat <<EOF > argocd-settings/git-repo.yaml
-          $ARGO_GIT_REPO
-          EOF
-            
-          cat <<EOF > argocd-settings/application.yaml
-          $ARGO_APPLICATION
-          EOF
-          
+          echo "${{ secrets.ARGO_GIT_REPO }}" > argocd-settings/git-repo.yaml
 
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
-          kubectl create namespace argocd --dry-run=client -o yaml
           kubectl apply -f ./argocd-settings/
-
-
-
-
-

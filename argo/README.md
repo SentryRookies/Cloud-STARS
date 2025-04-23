@@ -15,7 +15,7 @@ kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 디코딩 하는 코드
 [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("패스워드"))
-[System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("OThGbG1nSDlFaGNrdGF1Wg=="))
+[System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("YTBzZ3JKa0U0VjRIYkN6R2pJV2VPVnVJRzhpMGhNME03Z0R1WTNrVkdIOURpNFpVZDNYeHlt"))
 ```
 
 # 아르고 패스워드 변경
