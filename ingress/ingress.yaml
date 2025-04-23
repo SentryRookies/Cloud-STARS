@@ -68,13 +68,13 @@ spec:
                   number: 8761
             path: /
             pathType: Prefix
-    - host: jenkins.seoultravel.life
+    - host: kafkamanager.seoultravel.life
       http:
         paths:
           - backend:
               service:
-                name: jenkins
+                name: kafkamanager-cs
                 port:
-                  number: 8888
+                  number: 12004
             path: /
             pathType: Prefix

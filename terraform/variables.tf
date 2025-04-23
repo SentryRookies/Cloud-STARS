@@ -3,5 +3,5 @@ variable "region" {
 }
 
 variable "cluster_name" { 
-  default = "one-cluster"
+  default = "star-cluster"
 }

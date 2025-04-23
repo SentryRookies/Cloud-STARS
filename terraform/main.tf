@@ -32,7 +32,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.19.0"
 
-  name = "one-cluster-vpc"
+  name = "star-cluster-vpc"
   cidr = "192.168.0.0/16"
 
   azs             = ["ap-northeast-2a", "ap-northeast-2b", "ap-northeast-2c"]
@@ -78,8 +78,9 @@ module "eks" {
       subnets = module.vpc.public_subnets
 
       iam_role_additional_policies = {
-        ecr_read = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-        eks_service = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+        ecr_read = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"]
+        eks_service = ["arn:aws:iam::aws:policy/AmazonEKSServicePolicy"]
+        efs_service = ["arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"]
       }
     }
   }
