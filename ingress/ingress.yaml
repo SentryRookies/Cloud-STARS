@@ -8,16 +8,6 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: demo1.seoultravel.life
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: api-gateway-cs
-                port:
-                  number: 8080
     - host: kafkamanager.seoultravel.life
       http:
         paths:
@@ -58,25 +48,6 @@ spec:
                   number: 5601
             path: /
             pathType: Prefix
-    - host: eureka.seoultravel.life
-      http:
-        paths:
-          - backend:
-              service:
-                name: eureka-server-cs
-                port:
-                  number: 8761
-            path: /
-            pathType: Prefix
-      http:
-        paths:
-          - backend:
-              service:
-                name: kafkamanager-cs
-                port:
-                  number: 12004
-            path: /
-            pathType: Prefix
     - host: elasticsearch.seoultravel.life
       http:
         paths:
@@ -85,5 +56,15 @@ spec:
                 name: elasticsearch-cs
                 port:
                   number: 9200
+            path: /
+            pathType: Prefix
+    - host: map.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: frontend-cs
+                port:
+                  number: 80
             path: /
             pathType: Prefix
