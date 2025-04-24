@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: frontend
+        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/frontend
+        command: ["nginx"]
+        args: ["-g", "daemon off;"] 
+        ports:
+          - containerPort: 80
+            name: http
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-cs
+  labels:
+    app: frontend
+    service: frontend
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    name: http
+  selector:
+    app: frontend
+  type: ClusterIP
