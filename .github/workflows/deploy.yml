@@ -11,7 +11,7 @@ on:
       environment:
         description: '수동 배포'
         required: true
-        default: 'infra'
+        default: 'all'
         type: choice
         options:
           - all
