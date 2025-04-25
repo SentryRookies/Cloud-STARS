@@ -124,10 +124,9 @@ jobs:
         run: |
           echo "${{ secrets.ARGO_GIT_REPO }}" > git-repo.yaml
           kubectl apply -f ./git-repo.yaml
-          kubectl apply -f ./install/
+          kubectl apply -f ./argo/install/
   setup-grafana:
     runs-on: ubuntu-latest
-    needs: setup-argocd
     if: ${{ github.event.inputs.environment == 'infra' }}
     steps:
       - name: Checkout repo
