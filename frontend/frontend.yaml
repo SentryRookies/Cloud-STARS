@@ -15,7 +15,7 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
       - name: frontend
-        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/frontend
+        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/frontend:8
         command: ["nginx"]
         args: ["-g", "daemon off;"] 
         ports:
