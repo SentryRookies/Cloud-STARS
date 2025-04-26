@@ -120,7 +120,7 @@ jobs:
           kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
           helm upgrade --install argocd argo/argo-cd \
             -n argocd \
-            -f argo\argocd-values.yaml
+            -f argocd-values.yaml
           kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml
           
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
