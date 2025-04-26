@@ -110,8 +110,8 @@ jobs:
       - name: Set up kubeconfig
         run: aws eks update-kubeconfig --region ap-northeast-2 --name one-cluster
 
-      # - name: Create argocd-values.yaml from secret
-      #   run: echo "${{ secrets.ARGO_VALUES }}" | base64 -d > argocd-values.yaml
+      - name: Create argocd-values.yaml from secret
+        run: echo "${{ secrets.ARGO_VALUES }}" | base64 -d > argocd-values.yaml
 
       - name: Install Argo CD with Helm
         run: |
