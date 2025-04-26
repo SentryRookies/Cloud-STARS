@@ -44,4 +44,6 @@ terraform/*
 /Icon/
 
 # datacollector
-/datacollector/
+/datacollector/*
+!datacollector/*.yaml
+!datacollector/*docker*

@@ -1,18 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: redis
+  name: frontend
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: frontend=777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/frontend
+    argocd-image-updater.argoproj.io/frontend.update-strategy: semver
+    argocd-image-updater.argoproj.io/frontend.allow-tags: regexp:^(\d+)$
 spec:
   project: default
   source:
     repoURL: https://github.com/heozzi/Cloud-STARS
     targetRevision: HEAD
-    path: redis
+    path: frontend
   destination:
     server: https://kubernetes.default.svc
     namespace: default
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false

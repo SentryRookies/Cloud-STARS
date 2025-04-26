@@ -11,10 +11,11 @@ on:
       environment:
         description: '수동 배포'
         required: true
-        default: 'infra'
+        default: 'all'
         type: choice
         options:
           - all
+          - argo
           - infra
 
 
@@ -88,7 +89,8 @@ jobs:
           kubectl label nodes ${NODES[2]} dspESType=data2 dspSparkType=worker dspDBType=postgre --overwrite
   setup-argocd:
     runs-on: ubuntu-latest
-    needs: setup-infra
+    if: ${{ github.event.inputs.environment == 'argo' }}
+    # needs: setup-infra
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -119,16 +121,16 @@ jobs:
           helm upgrade --install argocd argo/argo-cd \
             -n argocd \
             -f argocd-values.yaml
+          kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml
           
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
         run: |
           echo "${{ secrets.ARGO_GIT_REPO }}" > git-repo.yaml
           kubectl apply -f ./git-repo.yaml
-          kubectl apply -f ./install/
+          kubectl apply -f ./argo/install/
   setup-grafana:
     runs-on: ubuntu-latest
-    needs: setup-argocd
-    if: ${{ github.event.inputs.environment == 'all' }}
+    if: ${{ github.event.inputs.environment == 'infra' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
