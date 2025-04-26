@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: datacollector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: datacollector
+  template:
+    metadata:
+      labels:
+        app: datacollector
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: datacollector
+        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/datacollector
+        command: ["python","/app/main.py"]
+      
