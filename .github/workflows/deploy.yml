@@ -110,8 +110,8 @@ jobs:
       - name: Set up kubeconfig
         run: aws eks update-kubeconfig --region ap-northeast-2 --name one-cluster
 
-      - name: Create argocd-values.yaml from secret
-        run: echo "${{ secrets.ARGO_VALUES }}" | base64 -d > argocd-values.yaml
+      # - name: Create argocd-values.yaml from secret
+      #   run: echo "${{ secrets.ARGO_VALUES }}" | base64 -d > argocd-values.yaml
 
       - name: Install Argo CD with Helm
         run: |
@@ -120,7 +120,7 @@ jobs:
           kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
           helm upgrade --install argocd argo/argo-cd \
             -n argocd \
-            -f argocd-values.yaml
+            -f argo\argocd-values.yaml
           kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml
           
       - name: Apply Argo CD Settings (Git repo, Application, Secrets 등)
