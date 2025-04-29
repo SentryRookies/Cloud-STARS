@@ -20,7 +20,7 @@ spec:
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
           args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/congestion.jar"]
           ports:
-            - containerPort: 8082
+            - containerPort: 8081
               name: http
           volumeMounts:
             - name: config
@@ -44,7 +44,7 @@ metadata:
     service: congestion-service
 spec:
   ports:
-    - port: 8082
+    - port: 8081
       name: http
   selector:
     app: congestion-service

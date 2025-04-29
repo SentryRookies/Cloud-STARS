@@ -20,7 +20,7 @@ spec:
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
           args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/place.jar"]
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
               name: http
           volumeMounts:
             - name: config
@@ -44,7 +44,7 @@ metadata:
     service: place-service
 spec:
   ports:
-    - port: 8085
+    - port: 8082
       name: http
   selector:
     app: place-service
