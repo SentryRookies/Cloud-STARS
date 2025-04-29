@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: place-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: place-service
+  template:
+    metadata:
+      labels:
+        app: place-service
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: place-service
+          image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/place-service
+          command: ["java"]
+          #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
+          args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/place.jar"]
+          ports:
+            - containerPort: 8080
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: /classes/application.properties
+              subPath: application.properties
+      volumes:
+        - name: config
+          configMap:
+            name: place-config
+            items:
+              - key: "application.properties"
+                path: "application.properties"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: place-service-cs
+  labels:
+    app: place-service
+    service: place-service
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: place-service
+  type: ClusterIP
