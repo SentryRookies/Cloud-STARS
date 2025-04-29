@@ -68,3 +68,14 @@ spec:
                   number: 80
             path: /
             pathType: Prefix
+
+    - host: api.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: gateway-cs
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix

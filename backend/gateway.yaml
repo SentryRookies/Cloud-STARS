@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: place-service
+  name: gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: place-service
+      app: gateway
   template:
     metadata:
       labels:
-        app: place-service
+        app: gateway
     spec:
       terminationGracePeriodSeconds: 0
       containers:
-        - name: place-service
-          image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/place-service
+        - name: gateway
+          image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/gateway
           command: ["java"]
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
-          args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/place.jar"]
+          args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/gateway.jar"]
           ports:
             - containerPort: 8080
               name: http
@@ -29,7 +29,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: place-config
+            name: gateway-config
             items:
               - key: "application.properties"
                 path: "application.properties"
@@ -38,14 +38,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: place-service-cs
+  name: gateway-cs
   labels:
-    app: place-service
-    service: place-service
+    app: gateway
+    service: gateway
 spec:
   ports:
-    - port: 8085
+    - port: 8080
       name: http
   selector:
-    app: place-service
+    app: gateway
   type: ClusterIP
