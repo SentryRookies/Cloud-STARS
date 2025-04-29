@@ -50,6 +50,13 @@ spec:
         - containerPort: 30001
           protocol: "TCP"
           name: datainput01
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 18630
+          periodSeconds: 30
+          timeoutSeconds: 30
+
 
       volumes:
         - name: streamsets-data

@@ -1,0 +1,27 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: place-config
+data: # 데이터 부분이 어플리.yml임
+  application.properties: |- # 키밸류 키:application.yml
+    spring.application.name=place-service
+    spring.config.import=optional:file:.env[.properties]
+    # postgreSQL ??
+    spring.datasource.url=jdbc:postgresql://postgres-cs:5432/stars_db
+    spring.datasource.username=postgres
+    spring.datasource.password=example
+    spring.datasource.driver-class-name=org.postgresql.Driver
+    
+    spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+    spring.jpa.defer-datasource-initialization=true
+    spring.jpa.hibernate.ddl-auto=update
+    # spring.jpa.hibernate.ddl-auto=create
+    spring.jpa.show-sql=true
+    
+    #spring.sql.init.mode=always
+    
+    #API
+    kakao.api.key=${KAKAO_API_KEY}
+    
+    # ?? ??
+    logging.level.com.example.placeservice=INFO
