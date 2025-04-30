@@ -1,0 +1,23 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: congestion-config
+data: # 데이터 부분이 어플리.yml임
+  application.properties: |- # 키밸류 키:application.yml
+    spring.application.name=user-service
+    
+    server.port=8083
+    
+    spring.datasource.url=jdbc:postgresql://postgres-cs:5432/stars_db
+    spring.datasource.username=postgres
+    spring.datasource.password=example
+    spring.datasource.driver-class-name=org.postgresql.Driver
+    spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+    spring.jpa.hibernate.ddl-auto=update
+    
+    spring.data.redis.host=redis-master-cs
+    spring.data.redis.port=6379
+    
+    jwt.secret=${JWT_SECRET_KEY}
+    jwt.expiration=86400000
+    jwt.refresh-expiration=2592000000
