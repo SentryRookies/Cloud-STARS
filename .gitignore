@@ -47,3 +47,5 @@ terraform/*
 /datacollector/*
 !datacollector/*.yaml
 !datacollector/*docker*
+
+/backend/configMap

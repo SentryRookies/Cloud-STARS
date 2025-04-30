@@ -20,7 +20,7 @@ spec:
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
           args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/external.jar"]
           ports:
-            - containerPort: 8081
+            - containerPort: 8089
               name: http
           volumeMounts:
             - name: config
@@ -44,7 +44,7 @@ metadata:
     service: external-info-service
 spec:
   ports:
-    - port: 8081
+    - port: 8089
       name: http
   selector:
     app: external-info-service
