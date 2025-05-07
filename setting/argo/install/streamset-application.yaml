@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/heozzi/Cloud-STARS
     targetRevision: HEAD
-    path: streamset
+    path: infra/streamset
   destination:
     server: https://kubernetes.default.svc
     namespace: default

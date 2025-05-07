@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: aiservice
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: aiservice
   template:
     metadata:
       labels:
-        app: frontend
+        app: aiservice
     spec:
       terminationGracePeriodSeconds: 0
       containers:
-      - name: frontend
-        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/frontend
-        command: ["nginx"]
-        args: ["-g", "daemon off;"] 
+      - name: aiservice
+        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/aiservice
+        command: ["uvicorn"]
+        args: ["main:app", "--reload", "--port", "8089"] 
         ports:
-          - containerPort: 80
+          - containerPort: 8089
             name: http
         volumeMounts:
         - name: ai-model
@@ -33,15 +33,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-cs
+  name: aiservice-cs
   labels:
-    app: frontend
-    service: frontend
+    app: aiservice
+    service: aiservice
 spec:
   ports:
-  - port: 80
-    targetPort: 80
+  - port: 8089
+    targetPort: 8089
     name: http
   selector:
-    app: frontend
+    app: aiservice
   type: ClusterIP
