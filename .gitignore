@@ -37,7 +37,7 @@ out/
 
 ### terraform ###
 # terraform/.terraform
-terraform/*
+setting/terraform/*
 !terraform/*.tf
 
 # Icon
@@ -48,4 +48,4 @@ terraform/*
 !datacollector/*.yaml
 !datacollector/*docker*
 
-/backend/configMap
+/cicd/backend/configMap
