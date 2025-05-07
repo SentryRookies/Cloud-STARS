@@ -37,8 +37,8 @@ out/
 
 ### terraform ###
 # terraform/.terraform
-terraform/*
-!terraform/*.tf
+setting/terraform/*
+!setting/terraform/*.tf
 
 # Icon
 /Icon/

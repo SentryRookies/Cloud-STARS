@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/heozzi/Cloud-STARS
     targetRevision: HEAD
-    path: ingress
+    path: infra/ingress
   destination:
     server: https://kubernetes.default.svc
     namespace: default
