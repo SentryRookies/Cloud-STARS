@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: external-info-service
+  name: user-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: external-info-service
+      app: user-service
   template:
     metadata:
       labels:
-        app: external-info-service
+        app: user-service
     spec:
       terminationGracePeriodSeconds: 0
       containers:
-        - name: external-info-service
-          image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/external-info-service
+        - name: user-service
+          image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/user-service
           command: ["java"]
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
-          args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/external.jar"]
+          args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/user.jar"]
           ports:
-            - containerPort: 8081
+            - containerPort: 8083
               name: http
           volumeMounts:
             - name: config
@@ -29,7 +29,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: external-config
+            name: congestion-config
             items:
               - key: "application.properties"
                 path: "application.properties"
@@ -38,14 +38,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: external-info-service-cs
+  name: user-service-cs
   labels:
-    app: external-info-service
-    service: external-info-service
+    app: user-service
+    service: user-service
 spec:
   ports:
-    - port: 8081
+    - port: 8083
       name: http
   selector:
-    app: external-info-service
+    app: user-service
   type: ClusterIP

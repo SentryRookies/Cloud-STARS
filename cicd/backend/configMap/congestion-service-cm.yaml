@@ -1,12 +1,11 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: external-config
+  name: congestion-config
 data: # 데이터 부분이 어플리.yml임
   application.properties: |- # 키밸류 키:application.yml
-    spring.application.name=external-info-service
+    spring.application.name=congestion-service
     server.port=8081
-    
     # postgreSQL ??
     spring.datasource.url=jdbc:postgresql://postgres-cs:5432/stars_db
     spring.datasource.username=postgres
@@ -15,11 +14,8 @@ data: # 데이터 부분이 어플리.yml임
     
     spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
     spring.jpa.hibernate.ddl-auto=update
-    spring.elasticsearch.uris= http://elasticsearch.seoultravel.life:9200
     
-    spring.mvc.contentnegotiation.favor-path-extension=false
-    spring.mvc.contentnegotiation.media-types.json=application/json
-    spring.mvc.default-response-type=application/json
-    
-    
-    seoul.api.key=505a6255746b696d34344b46566174
+    spring.jpa.defer-datasource-initialization=true
+    # Hibernate SQL ?? ???
+    spring.jpa.show-sql=true
+    spring.sql.init.mode=always

@@ -1,27 +1,23 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: place-config
+  name: congestion-config
 data: # 데이터 부분이 어플리.yml임
   application.properties: |- # 키밸류 키:application.yml
-    spring.application.name=place-service
-    spring.config.import=optional:file:.env[.properties]
-    # postgreSQL ??
+    spring.application.name=user-service
+    
+    server.port=8083
+    
     spring.datasource.url=jdbc:postgresql://postgres-cs:5432/stars_db
     spring.datasource.username=postgres
     spring.datasource.password=example
     spring.datasource.driver-class-name=org.postgresql.Driver
-    
     spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-    spring.jpa.defer-datasource-initialization=true
     spring.jpa.hibernate.ddl-auto=update
-    # spring.jpa.hibernate.ddl-auto=create
-    spring.jpa.show-sql=true
     
-    #spring.sql.init.mode=always
+    spring.data.redis.host=redis-master-cs
+    spring.data.redis.port=6379
     
-    #API
-    kakao.api.key=${KAKAO_API_KEY}
-    
-    # ?? ??
-    logging.level.com.example.placeservice=INFO
+    jwt.secret=${JWT_SECRET_KEY}
+    jwt.expiration=86400000
+    jwt.refresh-expiration=2592000000
