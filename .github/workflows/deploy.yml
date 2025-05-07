@@ -89,8 +89,8 @@ jobs:
           kubectl label nodes ${NODES[2]} dspESType=data2 dspSparkType=worker dspDBType=postgre --overwrite
   setup-argocd:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.environment == 'argo' }}
-    # needs: setup-infra
+    # if: ${{ github.event.inputs.environment == 'argo' }}
+    needs: setup-infra
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -127,7 +127,7 @@ jobs:
         run: |
           echo "${{ secrets.ARGO_GIT_REPO }}" > git-repo.yaml
           kubectl apply -f ./git-repo.yaml
-          kubectl apply -f ./argo/install/
+          kubectl apply -f ./setting/argo/install/
   setup-grafana:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.environment == 'infra' }}

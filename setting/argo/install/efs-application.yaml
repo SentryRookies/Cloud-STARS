@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/heozzi/Cloud-STARS
     targetRevision: HEAD
-    path: efs
+    path: setting/efs
   destination:
     server: https://kubernetes.default.svc
     namespace: default
