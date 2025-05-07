@@ -48,4 +48,4 @@ setting/terraform/*
 !datacollector/*.yaml
 !datacollector/*docker*
 
-/backend/configMap
+/cicd/backend/configMap
