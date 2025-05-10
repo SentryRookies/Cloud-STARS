@@ -49,3 +49,4 @@ setting/terraform/*
 !datacollector/*docker*
 
 /cicd/backend/configMap
+/cicd/frontend/*_test.yaml
