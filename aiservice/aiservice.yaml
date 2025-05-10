@@ -23,7 +23,7 @@ spec:
             name: http
         volumeMounts:
         - name: ai-model
-          mountPath: /model/
+          mountPath: /python/model/
       volumes:
         - name: ai-model
           persistentVolumeClaim:
