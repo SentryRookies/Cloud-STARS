@@ -29,7 +29,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: congestion-config
+            name: user-config
             items:
               - key: "application.properties"
                 path: "application.properties"
