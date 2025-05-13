@@ -24,15 +24,15 @@ spec:
               name: http
           volumeMounts:
             - name: config
-              mountPath: /classes/application.properties
-              subPath: application.properties
+              mountPath: /classes/
       volumes:
         - name: config
           configMap:
             name: congestion-config
-            items:
-              - key: "application.properties"
-                path: "application.properties"
+#            items: # 콘피그 맵 중에서 하나만 뽑아서 파일로 저장할때는 item 사용
+#              - key: "application.properties"
+#                path: "application.properties"
+            # 아이템 없으면 콘피그맵에 있는 모든 파일이 해당 경로에 생성된다.
 
 ---
 apiVersion: v1
