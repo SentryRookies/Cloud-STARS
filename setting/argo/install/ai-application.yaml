@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/heozzi/Cloud-STARS
+    repoURL: https://github.com/SentryRookies/Cloud-STARS
     targetRevision: HEAD
-    path: ai
+    path: aiservice
   destination:
     server: https://kubernetes.default.svc
     namespace: default

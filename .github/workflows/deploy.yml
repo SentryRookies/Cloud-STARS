@@ -127,6 +127,7 @@ jobs:
         run: |
           echo "${{ secrets.ARGO_GIT_REPO }}" > git-repo.yaml
           kubectl apply -f ./git-repo.yaml
+          sleep 15
           kubectl apply -f ./setting/argo/install/
   setup-grafana:
     runs-on: ubuntu-latest

@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/heozzi/Cloud-STARS
+    repoURL: https://github.com/SentryRookies/Cloud-STARS
     targetRevision: HEAD
     path: infra/streamset
   destination:
