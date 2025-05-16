@@ -178,7 +178,8 @@ jobs:
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
           helm repo update
           helm upgrade --install prometheus prometheus-community/prometheus \
-            --namespace default \
+            --namespace monitoring \
+            --create-namespace \
             -f ./infra/none/prometheus/values.yaml
 
       - name: Install prometalertmanagerheus with Helm
