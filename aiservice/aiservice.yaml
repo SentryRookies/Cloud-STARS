@@ -17,7 +17,7 @@ spec:
       - name: aiservice
         image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/aiservice
         command: ["uvicorn"]
-        args: ["main:app", "--reload", "--port", "8089"] 
+        args: [ "main:app", "--reload", "--host", "0.0.0.0", "--port", "8089" ]
         ports:
           - containerPort: 8089
             name: http

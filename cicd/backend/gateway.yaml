@@ -12,7 +12,7 @@ spec:
       labels:
         app: gateway
     spec:
-      terminationGracePeriodSeconds: 0
+      terminationGracePeriodSeconds: 10
       containers:
         - name: gateway
           image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/gateway
