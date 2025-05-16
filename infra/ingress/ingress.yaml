@@ -59,7 +59,7 @@ spec:
                   number: 9200
             path: /
             pathType: Prefix
-    - host: map.seoultravel.life
+    - host: www.seoultravel.life
       http:
         paths:
           - backend:
