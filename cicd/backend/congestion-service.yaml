@@ -3,16 +3,18 @@ kind: Deployment
 metadata:
   name: congestion-service
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: congestion-service
+  replicas: 2
+  selector: # 셀렉터가 아래에 해당하는 파드를 관리하도록 설정
+    matchLabels: # 디플로이에서 해당하는 파드들만 관리할거임 -> 리스타트 디플로이 이런거 하면 여기 애들만 리스타트
+      app: congestion-service # 라벨이 이와 같은 파드들을 관리하겠다
   template:
     metadata:
       labels:
-        app: congestion-service
+        app: congestion-service # 이 라벨을 통해서 셀렉터가 파드나 리소스를 선택함
     spec:
-      terminationGracePeriodSeconds: 0
+      terminationGracePeriodSeconds: 10 # 기존 파드가 요청을 처리하는 도중에 교체되면 요청이 끊기니까
+                                        # 요청 다 끝날 때까지 10초 정도 기다리고 파드를 교체하겠다는 의미
+                                        # 새로운 요청은 새 파드로 들어가고 기존 요청만 처리
       containers:
         - name: congestion-service
           image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/congestion-service
@@ -22,6 +24,12 @@ spec:
           ports:
             - containerPort: 8081
               name: http
+          readinessProbe: # 헬스체크 해서 이거가 되면 파드 실행
+            httpGet:
+              path: /swagger-ui/index.html
+              port: 8081
+            periodSeconds: 5
+            timeoutSeconds: 5
           volumeMounts:
             - name: config
               mountPath: /classes/
@@ -46,6 +54,7 @@ spec:
   ports:
     - port: 8081
       name: http
-  selector:
+  selector: # 아래의 라벨을 가진 파드들에게 트래픽을 보낼거임
+            # 파드가 여러개일 경우 기본적으로 라운드로빈 방식으로 하나씩 트래픽을 보냄
     app: congestion-service
-  type: ClusterIP
+  type: ClusterIP # 클러스터에서만 접근 가능한 IP로 서비스를 배포할 것이다.
