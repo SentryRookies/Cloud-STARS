@@ -80,3 +80,13 @@ spec:
                   number: 8080
             path: /
             pathType: Prefix
+    - host: grafana.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: grafana
+                port:
+                  number: 7080
+            path: /
+            pathType: Prefix
