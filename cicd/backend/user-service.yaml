@@ -18,7 +18,12 @@ spec:
           image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/user-service
           command: ["java"]
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
-          args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/user.jar"]
+          # D머시기 애들은 자바 실행할 때 설정 파일들 경로 지정해서 그 파일로 설정할거다 말해주는 거임
+          args: ["-Dspring.profiles.active=dev",
+                 "-Dspring.config.location=/classes/application.properties",
+                 "-Dlogging.config=/classes/logback-spring.xml",
+                 "-jar",
+                 "/app/user.jar"]
           ports:
             - containerPort: 8083
               name: http
@@ -32,6 +37,10 @@ spec:
             - name: config
               mountPath: /classes/application.properties
               subPath: application.properties
+            - name: logging
+              mountPath: /classes/logback-spring.xml
+              subPath: logback-spring.xml
+
       volumes:
         - name: config
           configMap:
@@ -39,6 +48,13 @@ spec:
             items:
               - key: "application.properties"
                 path: "application.properties"
+        - name: logging
+          configMap:
+            name: user-config
+            items:
+              - key: "logback-spring.xml"
+                path: "logback-spring.xml"
+
 
 ---
 apiVersion: v1

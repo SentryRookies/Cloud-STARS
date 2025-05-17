@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-config
+data:
+  logstash.conf: |
+    input {
+      tcp {
+        port => 5044
+        codec => json
+      }
+    }
+
+    output {
+      elasticsearch {
+        hosts => ["http://elasticsearch-cs:9200"]
+        index => "logs-%{+YYYY.MM.dd}"
+      }
+    }
+
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    http.port: 9600
+    log.level: info
+    
+    config.reload.automatic: true
+    config.reload.interval: 5s
+    
+    queue.type: persisted
+    pipeline.workers: 2
+    pipeline.batch.size: 125
+    pipeline.batch.delay: 5
