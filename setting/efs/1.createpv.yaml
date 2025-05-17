@@ -832,3 +832,21 @@ spec:
   csi:
     driver: efs.csi.aws.com
     volumeHandle: fs-07cac985d0f82c76d::fsap-03c689ea1047bbc9a
+
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logstash-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      type: logstash-pv
