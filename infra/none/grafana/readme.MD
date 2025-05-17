@@ -14,6 +14,8 @@
     
 - 포트포워딩
   - kubectl port-forward svc/grafana -n monitoring 7080:7080
+  - 프로메테우스
+    - kubectl port-forward svc/prometheus-server -n monitoring 980:980
 
 - 데이터 소스 uri
   - 엘라스틱

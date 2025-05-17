@@ -760,7 +760,7 @@ spec:
     driver: efs.csi.aws.com
     volumeHandle: fs-07cac985d0f82c76d::fsap-030d49fcfe3744dff
 ---
-# Source: redis-master/templates/efs-pvc.yaml
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
