@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-suggest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-suggest
+  template:
+    metadata:
+      labels:
+        app: ai-suggest
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: ai-suggest
+        image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/ai-suggest
+        command: ["uvicorn"]
+        args: [ "main:app", "--reload", "--host", "0.0.0.0", "--port", "8089" ]
+        ports:
+          - containerPort: 8089
+            name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-suggest-cs
+  labels:
+    app: ai-suggest
+    service: ai-suggest
+spec:
+  ports:
+  - port: 8089
+    targetPort: 8089
+    name: http
+  selector:
+    app: ai-suggest
+  type: ClusterIP

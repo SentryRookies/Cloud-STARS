@@ -50,3 +50,4 @@ setting/terraform/*
 
 /cicd/backend/configMap
 /cicd/frontend/*_test.yaml
+/infra/zipkin/
