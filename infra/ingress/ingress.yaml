@@ -90,3 +90,14 @@ spec:
                   number: 7080
             path: /
             pathType: Prefix
+
+    - host: zipkin.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: zipkin
+                port:
+                  number: 9411
+            path: /
+            pathType: Prefix
