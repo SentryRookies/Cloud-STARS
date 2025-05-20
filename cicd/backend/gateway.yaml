@@ -18,7 +18,11 @@ spec:
           image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/gateway
           command: ["java"]
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
-          args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/gateway.jar"]
+          args: [ "-Dspring.profiles.active=dev",
+                  "-Dspring.config.location=/classes/application.properties",
+                  "-Dlogging.config=/classes/logback-spring.xml", # 이거는 스프링에 logstash 의존성 없으면 에러 뜸
+                  "-jar",
+                  "/app/gateway.jar" ]
           ports:
             - containerPort: 8080
               name: http
@@ -26,6 +30,9 @@ spec:
             - name: config
               mountPath: /classes/application.properties
               subPath: application.properties
+            - name: logging
+              mountPath: /classes/logback-spring.xml
+              subPath: logback-spring.xml
       volumes:
         - name: config
           configMap:
@@ -33,6 +40,13 @@ spec:
             items:
               - key: "application.properties"
                 path: "application.properties"
+
+        - name: logging
+          configMap:
+            name: gateway-config
+            items:
+              - key: "logback-spring.xml"
+                path: "logback-spring.xml"
 
 ---
 apiVersion: v1
