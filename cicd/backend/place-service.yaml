@@ -30,8 +30,8 @@ spec:
             httpGet:
               path: /swagger-ui/index.html
               port: 8082
-            periodSeconds: 5
-            timeoutSeconds: 5
+            periodSeconds: 30
+            timeoutSeconds: 30
           volumeMounts:
             - name: config
               mountPath: /classes/application.properties
