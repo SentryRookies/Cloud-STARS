@@ -20,7 +20,11 @@ spec:
           image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/congestion-service
           command: ["java"]
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
-          args: ["-Dspring.profiles.active=dev","-Dspring.config.location=/classes/application.properties","-jar","/app/congestion.jar"]
+          args: [ "-Dspring.profiles.active=dev",
+                  "-Dspring.config.location=/classes/application.properties",
+                  "-Dlogging.config=/classes/logback-spring.xml", # 이거는 스프링에 logstash 의존성 없으면 에러 뜸
+                  "-jar",
+                  "/app/congestion.jar" ]
           ports:
             - containerPort: 8081
               name: http
@@ -32,15 +36,29 @@ spec:
             timeoutSeconds: 5
           volumeMounts:
             - name: config
-              mountPath: /classes/
+              mountPath: /classes/application.properties
+              subPath: application.properties #서브패스 달면 이 파일 하나만 넣는거, 안넣으면 폴더 전체가 바뀜
+            - name: logging
+              mountPath: /classes/logback-spring.xml
+              subPath: logback-spring.xml
       volumes:
         - name: config
           configMap:
             name: congestion-config
-#            items: # 콘피그 맵 중에서 하나만 뽑아서 파일로 저장할때는 item 사용
-#              - key: "application.properties"
-#                path: "application.properties"
+            items: # 콘피그 맵 중에서 하나만 뽑아서 파일로 저장할때는 item 사용
+              - key: "application.properties"
+                path: "application.properties"
             # 아이템 없으면 콘피그맵에 있는 모든 파일이 해당 경로에 생성된다.
+
+        - name: logging
+          configMap:
+            name: congestion-config
+            items:
+              - key: "logback-spring.xml"
+                path: "logback-spring.xml"
+
+
+
 
 ---
 apiVersion: v1

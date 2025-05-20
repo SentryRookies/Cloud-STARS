@@ -30,3 +30,8 @@ data:
     pipeline.workers: 2
     pipeline.batch.size: 125
     pipeline.batch.delay: 5
+  
+
+  pipelines.yml: |
+    - pipeline.id: main
+      path.config: "/usr/share/logstash/pipeline/logstash.conf"
