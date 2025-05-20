@@ -49,16 +49,7 @@ spec:
                   number: 5601
             path: /
             pathType: Prefix
-    - host: elasticsearch.seoultravel.life
-      http:
-        paths:
-          - backend:
-              service:
-                name: elasticsearch-cs
-                port:
-                  number: 9200
-            path: /
-            pathType: Prefix
+            
     - host: www.seoultravel.life
       http:
         paths:
@@ -70,16 +61,6 @@ spec:
             path: /
             pathType: Prefix
 
-    - host: api.seoultravel.life
-      http:
-        paths:
-          - backend:
-              service:
-                name: gateway-cs
-                port:
-                  number: 8080
-            path: /
-            pathType: Prefix
     - host: grafana.seoultravel.life
       http:
         paths:
@@ -88,5 +69,16 @@ spec:
                 name: grafana
                 port:
                   number: 7080
+            path: /
+            pathType: Prefix
+
+    - host: zipkin.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: zipkin
+                port:
+                  number: 9411
             path: /
             pathType: Prefix
