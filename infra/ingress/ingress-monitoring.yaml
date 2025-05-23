@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monitoring-ingress
+  namespace: monitoring
+  labels:
+    app: monitoring
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
+spec:
+  ingressClassName: alb
+  rules:
+    - host: grafana.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: grafana
+                port:
+                  number: 7080
+            path: /
+            pathType: Prefix
+
+    - host: zipkin.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: zipkin
+                port:
+                  number: 9411
+            path: /
+            pathType: Prefix
