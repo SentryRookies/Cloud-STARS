@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: zk-svc
+  namespace: data-processing
   labels:
     app: zk-svc
 spec:

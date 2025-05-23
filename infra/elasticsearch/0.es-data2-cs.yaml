@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: elasticsearch-data2-cs
+  namespace: logging
   labels:
     component: elasticsearch-data2
 spec:

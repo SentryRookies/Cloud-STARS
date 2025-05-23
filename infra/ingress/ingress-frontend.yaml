@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend-ingress
+  namespace: frontend
+  labels:
+    app: frontend
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
+spec:
+  ingressClassName: alb
+  rules:
+    - host: www.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: frontend-cs
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix

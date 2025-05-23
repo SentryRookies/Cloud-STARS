@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: place-service
+  namespace: backend
 spec:
   replicas: 2
   selector:
@@ -60,6 +61,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: place-service-cs
+  namespace: backend
   labels:
     app: place-service
     service: place-service

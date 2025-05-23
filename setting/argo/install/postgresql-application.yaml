@@ -8,10 +8,10 @@ spec:
   source:
     repoURL: https://github.com/SentryRookies/Cloud-STARS
     targetRevision: HEAD
-    path: infra/postgresql
+    path: infra/postgresq`l
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: database
   syncPolicy:
     automated:
       prune: true

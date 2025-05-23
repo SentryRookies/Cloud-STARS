@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: logging-ingress
+  namespace: logging
+  labels:
+    app: logging
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
+spec:
+  ingressClassName: alb
+  rules:
+    - host: kibana.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: kibana-cs
+                port:
+                  number: 5601
+            path: /
+            pathType: Prefix

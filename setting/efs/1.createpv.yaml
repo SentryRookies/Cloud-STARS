@@ -5,6 +5,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: streamsets-data-pv
+  namespace: data-processing
   labels:
     type: streamsets-data-pv
 spec:
@@ -24,6 +25,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: streamsets-data-pvc
+  namespace: data-processing
 spec:
   accessModes:
     - ReadWriteMany
@@ -40,6 +42,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: streamsets-libs-pv
+  namespace: data-processing
   labels:
     type: streamsets-libs-pv
 spec:
@@ -59,6 +62,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: streamsets-libs-pvc
+  namespace: data-processing
 spec:
   accessModes:
     - ReadWriteMany
@@ -79,6 +83,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: kafka-pv
+  namespace: data-processing
   labels:
     type: kafka-pv
 spec:
@@ -99,6 +104,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: kafka-pvc
+  namespace: data-processing
 spec:
   accessModes:
     - ReadWriteMany
@@ -119,6 +125,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: redis-master-pv
+  namespace: database
   labels:
     type: redis-master-pv
 spec:
@@ -139,6 +146,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: redis-master-pvc
+  namespace: database
 spec:
   accessModes:
     - ReadWriteMany
@@ -158,6 +166,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: es-master-config-pv
+  namespace: logging
   labels:
     type: es-master-config-pv
 spec:
@@ -178,6 +187,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-master-config-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -194,6 +204,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata: 
   name: es-master-data-pv
+  namespace: logging
   labels:
     type: es-master-data-pv
 spec:
@@ -214,6 +225,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-master-data-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -230,6 +242,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata: 
   name: es-master-logs-pv
+  namespace: logging
   labels:
     type: es-master-logs-pv
 spec:
@@ -250,6 +263,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-master-logs-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -269,6 +283,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: es-data1-config-pv
+  namespace: logging
   labels:
     type: es-data1-config-pv
 spec:
@@ -289,6 +304,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-data1-config-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -305,6 +321,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata: 
   name: es-data1-data-pv
+  namespace: logging
   labels:
     type: es-data1-data-pv
 spec:
@@ -325,6 +342,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-data1-data-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -341,6 +359,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata: 
   name: es-data1-logs-pv
+  namespace: logging
   labels:
     type: es-data1-logs-pv
 spec:
@@ -361,6 +380,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-data1-logs-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -381,6 +401,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: es-data2-config-pv
+  namespace: logging
   labels:
     type: es-data2-config-pv
 spec:
@@ -401,6 +422,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-data2-config-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -417,6 +439,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata: 
   name: es-data2-data-pv
+  namespace: logging
   labels:
     type: es-data2-data-pv
 spec:
@@ -437,6 +460,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-data2-data-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -453,6 +477,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata: 
   name: es-data2-logs-pv
+  namespace: logging
   labels:
     type: es-data2-logs-pv
 spec:
@@ -473,6 +498,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: es-data2-logs-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -493,6 +519,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: kibana-config-pv
+  namespace: logging
   labels:
     type: kibana-config-pv
 spec:
@@ -512,6 +539,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: kibana-config-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -527,6 +555,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: kibana-data-pv
+  namespace: logging
   labels:
     type: kibana-data-pv
 spec:
@@ -546,6 +575,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: kibana-data-pvc
+  namespace: logging
 spec:
   accessModes:
     - ReadWriteMany
@@ -566,6 +596,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: postgre-data-pv
+  namespace: database
   labels:
     type: postgre-data-pv
 spec:
@@ -585,6 +616,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: postgre-data-pvc
+  namespace: database
 spec:
   accessModes:
     - ReadWriteMany
@@ -597,84 +629,11 @@ spec:
       type: postgre-data-pv
 ---
 
-
-######################################
-###### For Spark
-
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: spark-data-pv
-  labels:
-    type: spark-data-pv
-spec:
-  capacity:
-    storage: 10Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: efs-sc
-  csi:
-    driver: efs.csi.aws.com
-    volumeHandle: fs-07cac985d0f82c76d::fsap-02e70fdbcc31b8888
----
-# Source: redis-master/templates/efs-pvc.yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: spark-data-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: efs-sc
-  resources:
-    requests:
-      storage: 10Gi
-  selector:
-    matchLabels:
-      type: spark-data-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: spark-work-log-pv
-  labels:
-    type: spark-work-log-pv
-spec:
-  capacity:
-    storage: 10Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: efs-sc
-  csi:
-    driver: efs.csi.aws.com
-    volumeHandle: fs-07cac985d0f82c76d::fsap-0a27185a7a0477aa0
----
-# Source: redis-master/templates/efs-pvc.yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: spark-work-log-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: efs-sc
-  resources:
-    requests:
-      storage: 10Gi
-  selector:
-    matchLabels:
-      type: spark-work-log-pv
----
-
-
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: prometheus-pv
+  namespace: monitoring
   labels:
     type: prometheus-pv
 spec:
@@ -705,41 +664,6 @@ spec:
   selector:
     matchLabels:
       type: prometheus-pv
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: prometheus-alert-pv
-  labels:
-    type: prometheus-alert-pv
-spec:
-  capacity:
-    storage: 10Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: efs-sc
-  csi:
-    driver: efs.csi.aws.com
-    volumeHandle: fs-07cac985d0f82c76d::fsap-0623fc743a1a533f9
----
-# Source: redis-master/templates/efs-pvc.yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: prometheus-alert-pvc
-  namespace: monitoring
-spec:
-  accessModes:
-    - ReadWriteMany
-  storageClassName: efs-sc
-  resources:
-    requests:
-      storage: 10Gi
-  selector:
-    matchLabels:
-      type: prometheus-alert-pv
 ---
 
 apiVersion: v1
@@ -784,6 +708,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ai-model-pvc
+  namespace: ai
 spec:
   accessModes:
     - ReadWriteMany
@@ -800,6 +725,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: ai-model-pv
+  namespace: ai
   labels:
     type: ai-model-pv
 spec:
@@ -821,6 +747,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: logstash-pv
+  namespace : logging
   labels:
     type: logstash-pv
 spec:
@@ -842,6 +769,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: logstash-pvc
+  namespace : logging
 spec:
   accessModes:
     - ReadWriteMany

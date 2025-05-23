@@ -5,6 +5,7 @@ metadata:
   labels:
     component: postgres
   name: postgres-lb
+  namespace: database
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
 spec:

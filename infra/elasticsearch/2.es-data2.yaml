@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: elasticsearch-data2
+  namespace: logging
   labels:
     component: elasticsearch-data2
     role: data

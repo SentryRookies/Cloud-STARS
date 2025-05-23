@@ -11,7 +11,7 @@ spec:
     path: datacollector
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: data-processing
   syncPolicy:
     automated:
       prune: true
