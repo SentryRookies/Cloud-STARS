@@ -87,6 +87,13 @@ jobs:
           kubectl label nodes ${NODES[0]} dspESType=master dspSparkType=master --overwrite
           kubectl label nodes ${NODES[1]} dspESType=data1 dspSparkType=worker --overwrite
           kubectl label nodes ${NODES[2]} dspESType=data2 dspSparkType=worker dspDBType=postgre --overwrite
+      - name: Create namespaces
+        run: |
+          kubectl create namespace backend --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create namespace frontend --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create namespace database --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create namespace data-processing --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create namespace ai --dry-run=client -o yaml | kubectl apply -f -
   setup-argocd:
     runs-on: ubuntu-latest
     # if: ${{ github.event.inputs.environment == 'argo' }}

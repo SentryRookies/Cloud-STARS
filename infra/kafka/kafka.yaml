@@ -128,7 +128,7 @@ spec:
              --override zookeeper.connect=zk-svc:2181 \
              --override zookeeper.session.timeout.ms=6000 \
              --override zookeeper.set.acl=false \
-             --override advertised.listeners=INTERNAL_PLAINTEXT://${HOSTNAME}.kafka-svc.default.svc.cluster.local:9093,EXTERNAL_PLAINTEXT://${MY_HOST_IP}:32400 \
+             --override advertised.listeners=INTERNAL_PLAINTEXT://${HOSTNAME}.kafka-svc.data-processing.svc.cluster.local:9093,EXTERNAL_PLAINTEXT://${MY_HOST_IP}:32400 \
              --override listener.security.protocol.map=INTERNAL_PLAINTEXT:PLAINTEXT,EXTERNAL_PLAINTEXT:PLAINTEXT \
              --override inter.broker.listener.name=INTERNAL_PLAINTEXT "
           env:
