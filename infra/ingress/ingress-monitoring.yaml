@@ -12,6 +12,13 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-http
 spec:
   ingressClassName: alb
+  tls:
+    - hosts:
+        - grafana.seoultravel.life
+      secretName: grafana-tls
+    - hosts:
+        - zipkin.seoultravel.life
+      secretName: zipkin-tls
   rules:
     - host: grafana.seoultravel.life
       http:
