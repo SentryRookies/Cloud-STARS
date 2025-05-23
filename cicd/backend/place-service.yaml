@@ -16,7 +16,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: place-service
-          image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/place-service:1.116
+          image: 777205220558.dkr.ecr.ap-northeast-2.amazonaws.com/place-service
           command: ["java"]
           #        args: ["-Dspring.profiles.active=dev","-jar","/demo1.jar"]
           args: [ "-Dspring.profiles.active=dev",
