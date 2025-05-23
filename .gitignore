@@ -52,3 +52,5 @@ setting/terraform/*
 /cicd/frontend/*_test.yaml
 /infra/zipkin/zipkin-server.yaml
 /infra/zipkin/zipkin-cm.yaml
+/infra/kafka/kafka-manager.yaml
+/infra/none/spring/*

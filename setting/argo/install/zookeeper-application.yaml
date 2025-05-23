@@ -11,7 +11,7 @@ spec:
     path: infra/zookeeper
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: data-processing
   syncPolicy:
     automated:
       prune: true

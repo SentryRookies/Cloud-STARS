@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: congestion-service
+  namespace: backend
 spec:
   replicas: 2
   selector: # 셀렉터가 아래에 해당하는 파드를 관리하도록 설정
@@ -65,6 +66,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: congestion-service-cs
+  namespace: backend
   labels:
     app: congestion-service
     service: congestion-service

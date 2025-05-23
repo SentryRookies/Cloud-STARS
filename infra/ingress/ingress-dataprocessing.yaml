@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: data-processing
+  namespace: data-processing
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
+spec:
+  ingressClassName: alb
+  rules:
+    - host: streamsets.seoultravel.life
+      http:
+        paths:
+          - backend:
+              service:
+                name: streamsets1-cs
+                port:
+                  number: 18630
+            path: /
+            pathType: Prefix

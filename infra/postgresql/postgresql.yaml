@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ReplicationController
 metadata:
   name: postgresql
+  namespace: database
 spec:
   replicas: 1
   template:
@@ -47,6 +48,7 @@ metadata:
   labels:
     component: postgres
   name: postgres-cs
+  namespace: database
 spec:
   ports:
     - port: 5432

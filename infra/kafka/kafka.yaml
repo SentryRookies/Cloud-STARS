@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: kafka
+  namespace: data-processing
 spec:
   replicas: 3
   serviceName: kafka-svc
