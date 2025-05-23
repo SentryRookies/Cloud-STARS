@@ -9,6 +9,7 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=600
+    cert-manager.io/cluster-issuer: letsencrypt-http
 spec:
   ingressClassName: alb
   rules:
