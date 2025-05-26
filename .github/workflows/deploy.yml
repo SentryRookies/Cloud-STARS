@@ -94,6 +94,7 @@ jobs:
           kubectl create namespace database --dry-run=client -o yaml | kubectl apply -f -
           kubectl create namespace data-processing --dry-run=client -o yaml | kubectl apply -f -
           kubectl create namespace ai --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create namespace logging --dry-run=client -o yaml | kubectl apply -f -
   setup-argocd:
     runs-on: ubuntu-latest
     # if: ${{ github.event.inputs.environment == 'argo' }}
