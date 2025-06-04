@@ -171,7 +171,7 @@ metadata:
     type: es-master-config-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 3Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -194,7 +194,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
   selector:
     matchLabels:
       type: es-master-config-pv
@@ -209,7 +209,7 @@ metadata:
     type: es-master-data-pv
 spec:
   capacity:
-    storage: 10Gi
+    storage: 30Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -232,7 +232,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 10Gi
+      storage: 30Gi
   selector:
     matchLabels:
       type: es-master-data-pv
@@ -247,7 +247,7 @@ metadata:
     type: es-master-logs-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 3Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -270,7 +270,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
   selector:
     matchLabels:
       type: es-master-logs-pv
@@ -288,7 +288,7 @@ metadata:
     type: es-data1-config-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 3Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -311,7 +311,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
   selector:
     matchLabels:
       type: es-data1-config-pv
@@ -326,7 +326,7 @@ metadata:
     type: es-data1-data-pv
 spec:
   capacity:
-    storage: 10Gi
+    storage: 30Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -349,7 +349,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 10Gi
+      storage: 30Gi
   selector:
     matchLabels:
       type: es-data1-data-pv
@@ -364,7 +364,7 @@ metadata:
     type: es-data1-logs-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 3Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -387,7 +387,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
   selector:
     matchLabels:
       type: es-data1-logs-pv
@@ -406,7 +406,7 @@ metadata:
     type: es-data2-config-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 3Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -429,7 +429,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
   selector:
     matchLabels:
       type: es-data2-config-pv
@@ -444,7 +444,7 @@ metadata:
     type: es-data2-data-pv
 spec:
   capacity:
-    storage: 10Gi
+    storage: 30Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -467,7 +467,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 10Gi
+      storage: 30Gi
   selector:
     matchLabels:
       type: es-data2-data-pv
@@ -482,7 +482,7 @@ metadata:
     type: es-data2-logs-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 3Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
@@ -505,7 +505,7 @@ spec:
   storageClassName: efs-sc
   resources:
     requests:
-      storage: 1Gi
+      storage: 3Gi
   selector:
     matchLabels:
       type: es-data2-logs-pv
